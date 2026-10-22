@@ -1,0 +1,65 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --background: #0B0D10;
+  --background-secondary: #101319;
+  --surface: #15191F;
+  --surface-hover: #1C222B;
+  --border: #2A3039;
+  --foreground: #F2F5F7;
+  --foreground-secondary: #9AA5B1;
+  --foreground-muted: #727D89;
+  --accent: #C8FF4D;
+  --accent-cyan: #50E6FF;
+  --warning: #FFB454;
+  --error: #FF647C;
+}
+
+body {
+  background-color: var(--background);
+  color: var(--foreground);
+  font-family: var(--font-inter, system-ui, -apple-system, sans-serif);
+  min-height: 100vh;
+  overflow-x: hidden;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* Technical forensic code & logs styling */
+code, pre, .font-mono {
+  font-family: var(--font-ibm-plex-mono, "IBM Plex Mono", ui-monospace, SFMono-Regular, monospace);
+}
+
+/* Custom restrained scrollbars */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+::-webkit-scrollbar-track {
+  background: #0B0D10;
+}
+::-webkit-scrollbar-thumb {
+  background: #2A3039;
+  border-radius: 3px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #3B4451;
+}
+
+/* Focus styles for keyboard accessibility */
+:focus-visible {
+  outline: 2px solid #C8FF4D;
+  outline-offset: 2px;
+}
+
+/* Reduced motion preference */
+@media (prefers-reduced-motion: reduce) {
+  *, ::before, ::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}

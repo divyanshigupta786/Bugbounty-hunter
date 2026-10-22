@@ -1,0 +1,27 @@
+# BugBounty Hunter
+
+> Every bug has a story. Every claim needs proof.
+
+BugBounty Hunter is an open-source AI developer tooling platform that turns vague bug reports into reproducible pytest tests, isolated container execution evidence, and portable Proof Packs.
+
+## Key Capabilities
+
+- **The Reproduction Ladder:** Bounded escalation from inexpensive invariant/baseline checks to AST synthesis and container execution.
+- **Honest Verdicts:** Three principal verdicts: `REPRODUCED`, `NOT_REPRODUCED`, and `INCONCLUSIVE`. A broken setup is never reported as bug absence.
+- **Disposable Sandboxing:** Tests run in disposable containers or strictly confined subprocesses with networking disabled (`--network none`) and credentials purged.
+- **Proof Pack Bundles:** Standalone, verifiable bundles with source references, commands, generated test files, execution traces, and replay instructions.
+- **Local Open-Weight AI:** Native support for Ollama (e.g. Qwen 2.5 Coder, DeepSeek Coder) plus zero-dependency deterministic rule engines for offline/CI use.
+
+## Public Architecture & Endpoints
+
+- Web App: Next.js App Router (Tailwind CSS, Three.js, Lucide)
+- API Service: FastAPI (Python 3.11+)
+- OpenAPI Specification: `/docs` and `/openapi.json`
+- Health Probes: `/api/v1/health` and `/api/v1/readiness`
+- Investigations API: `/api/v1/investigations`
+- Real-time Events: `/api/v1/investigations/{id}/events` (SSE)
+- Proof Pack Export: `/api/v1/investigations/{id}/report?format=markdown` or `?format=json`
+
+## Important Boundaries & Ethics
+
+BugBounty Hunter is a **software bug reproduction tool**, not a security vulnerability scanner or exploit scraping platform. It operates strictly on repositories and code authorized by the operator.

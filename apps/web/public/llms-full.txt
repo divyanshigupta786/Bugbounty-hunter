@@ -1,0 +1,36 @@
+# BugBounty Hunter — Full System Architecture & AI Reference
+
+## 1. System Overview
+BugBounty Hunter bridges the gap between vague developer defect reports and verified, repeatable test cases. It models the human software engineer investigation workflow into an autonomous, bounded state machine.
+
+## 2. State Machine: The Reproduction Ladder
+Investigations progress through the following bounded states:
+1. `VALIDATING`: SSRF verification, schema check on repository URL and parameters.
+2. `PREPARING`: Git clone/fixture copy, commit pinning, existing baseline test execution.
+3. `ANALYZING`: Deterministic symbol scanning and keyword AST scoring to locate target code.
+4. `HYPOTHESIZING`: Formulates 1-3 testable hypotheses with target files and expected failure causes.
+5. `GENERATING_TEST`: Synthesizes a minimal pytest reproduction candidate within strict size limits.
+6. `EXECUTING_TEST`: Dispatches test execution to an isolated container with `--network none` and strict timeouts.
+7. `EVALUATING_EVIDENCE`: Parses actual exit codes, stderr tracebacks, and assertion mismatches.
+8. `REPORTING`: Generates the complete Proof Pack (JSON schema 1.0.0, Markdown report, and ZIP bundle).
+9. `COMPLETED`: Terminal state with honest verdict.
+
+## 3. Honest Verdict Criteria
+- `REPRODUCED`: Observed failure matches reported issue symptoms and is backed by execution trace.
+- `NOT_REPRODUCED`: Candidate tests executed and passed cleanly without demonstrating failure under tested conditions.
+- `INCONCLUSIVE`: Baseline failed, environment timed out, syntax/collection error occurred, or evidence was ambiguous.
+
+## 4. Sandbox Isolation Guarantees
+- Network: Disabled (`--network none`)
+- Filesystem: Confined working directory, temporary disposable scratch paths
+- Environment: Purged of host cloud credentials, secrets, tokens, or private keys
+- Output Sanitization: Automated regex redaction of keys, passwords, and tokens
+- Execution Timeouts: Enforced per-test limits (default 30 seconds)
+- Memory Ceilings: Enforced resource caps (default 512MB)
+
+## 5. Replay Instructions & Proof Pack
+Each Proof Pack contains the exact command needed to replay the test:
+```bash
+pytest tests/test_reproduction_candidate.py -v
+```
+The result is portable and can be attached to issue trackers, pull requests, or benchmark suites.

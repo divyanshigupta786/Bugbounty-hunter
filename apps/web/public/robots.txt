@@ -1,0 +1,11 @@
+User-agent: *
+Allow: /
+Allow: /docs
+Allow: /llms.txt
+Allow: /llms-full.txt
+Disallow: /api/
+Disallow: /dashboard/
+Disallow: /investigations/
+Disallow: /settings/
+
+Sitemap: https://bugbounty-hunter.dev/sitemap.xml
