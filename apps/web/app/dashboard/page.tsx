@@ -27,19 +27,19 @@ export default function DashboardPage() {
   const [search, setSearch] = useState("");
   const [filterVerdict, setFilterVerdict] = useState<string>("ALL");
 
-  const loadData = async () => {
-    setIsLoading(true);
-    try {
-      const data = await fetchInvestigations(search || undefined);
-      setInvestigations(data);
-    } catch (err) {
-      console.error(err);
-    } finally {
-      setIsLoading(false);
-    }
-  };
-
   useEffect(() => {
+    const loadData = async () => {
+      setIsLoading(true);
+      try {
+        const data = await fetchInvestigations(search || undefined);
+        setInvestigations(data);
+      } catch (err) {
+        console.error(err);
+      } finally {
+        setIsLoading(false);
+      }
+    };
+
     loadData();
   }, [search]);
 

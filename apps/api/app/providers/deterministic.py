@@ -165,7 +165,7 @@ class DeterministicFixtureProvider(BaseModelProvider):
             )
 
         # Check for syntax error or test runner error
-        if "SyntaxError" in output or "ImportError" in output and "pixelflow" not in output:
+        if ("SyntaxError" in output or "ImportError" in output) and "pixelflow" not in output:
             return EvaluationResult(
                 verdict="INCONCLUSIVE",
                 explanation="The generated reproduction test encountered an environmental or syntax error.",
