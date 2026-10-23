@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useEffect, useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import Link from "next/link";
 import {
   Terminal,
@@ -27,21 +27,21 @@ export default function DashboardPage() {
   const [search, setSearch] = useState("");
   const [filterVerdict, setFilterVerdict] = useState<string>("ALL");
 
-  useEffect(() => {
-    const loadData = async () => {
-      setIsLoading(true);
-      try {
-        const data = await fetchInvestigations(search || undefined);
-        setInvestigations(data);
-      } catch (err) {
-        console.error(err);
-      } finally {
-        setIsLoading(false);
-      }
-    };
-
-    loadData();
+  const loadData = useCallback(async () => {
+    setIsLoading(true);
+    try {
+      const data = await fetchInvestigations(search || undefined);
+      setInvestigations(data);
+    } catch (err) {
+      console.error(err);
+    } finally {
+      setIsLoading(false);
+    }
   }, [search]);
+
+  useEffect(() => {
+    loadData();
+  }, [loadData]);
 
   const filtered = investigations.filter((inv) => {
     if (filterVerdict === "ALL") return true;

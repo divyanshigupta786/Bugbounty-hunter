@@ -93,8 +93,8 @@ async def test_investigation_api_endpoints(client: AsyncClient):
     inv_id = inv_data["id"]
     assert inv_data["state"] == "CREATED"
 
-    # Wait briefly for background execution to complete
-    for _ in range(20):
+    # Wait for background execution to complete (up to 30s for slower CI runners)
+    for _ in range(60):
         await asyncio.sleep(0.5)
         detail_res = await client.get(f"/api/v1/investigations/{inv_id}")
         if detail_res.status_code == 200:

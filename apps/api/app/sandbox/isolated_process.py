@@ -36,18 +36,24 @@ class IsolatedProcessSandbox(BaseSandbox):
         # Construct sanitized, minimal environment
         scripts_dir = str(Path(sys.executable).parent)
         system_path = os.environ.get("PATH", "")
-        safe_path = f"{scripts_dir};{system_path}" if scripts_dir not in system_path else system_path
+        sep = os.pathsep
+        safe_path = f"{scripts_dir}{sep}{system_path}" if scripts_dir not in system_path else system_path
 
         safe_env = {
             "PATH": safe_path,
-            "SYSTEMROOT": os.environ.get("SYSTEMROOT", "C:\\Windows"),
-            "WINDIR": os.environ.get("WINDIR", "C:\\Windows"),
             "PYTHONPATH": str(work_path),
             "PYTHONUNBUFFERED": "1",
             "PYTHONDONTWRITEBYTECODE": "1",
             "TMP": str(work_path / ".tmp"),
             "TEMP": str(work_path / ".tmp"),
         }
+        if platform.system() == "Windows":
+            safe_env["SYSTEMROOT"] = os.environ.get("SYSTEMROOT", "C:\\Windows")
+            safe_env["WINDIR"] = os.environ.get("WINDIR", "C:\\Windows")
+        else:
+            safe_env["HOME"] = os.environ.get("HOME", "/tmp")
+            if "LANG" in os.environ:
+                safe_env["LANG"] = os.environ["LANG"]
 
         # Normalize pytest command to use current python interpreter
         exec_cmd = command

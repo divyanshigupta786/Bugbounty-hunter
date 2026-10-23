@@ -48,7 +48,8 @@ ENV/
 *.db
 
 # Artifacts & Temporary execution data
-/data/sandboxes/
-/data/artifacts/
-/data/repos/
+**/data/sandboxes/
+**/data/artifacts/
+**/data/repos/
+apps/api/data/
 *.log
