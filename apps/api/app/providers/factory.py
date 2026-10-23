@@ -2,6 +2,7 @@ from typing import Optional
 from app.providers.base import BaseModelProvider
 from app.providers.deterministic import DeterministicFixtureProvider
 from app.providers.ollama import OllamaProvider
+from app.providers.gemini import GeminiProvider
 
 
 def get_model_provider(
@@ -12,6 +13,9 @@ def get_model_provider(
     """Factory creating appropriate model provider."""
     if is_demo or provider_name in ("deterministic", "fixture"):
         return DeterministicFixtureProvider()
+
+    if provider_name in ("gemini", "google"):
+        return GeminiProvider(model_name=model_name)
 
     if provider_name == "ollama":
         return OllamaProvider(model_name=model_name)

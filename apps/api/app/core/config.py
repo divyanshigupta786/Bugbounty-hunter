@@ -23,6 +23,8 @@ class Settings(BaseSettings):
     # Model inference settings
     OLLAMA_BASE_URL: str = "http://localhost:11434"
     DEFAULT_MODEL_NAME: str = "qwen2.5-coder:7b"
+    GEMINI_API_KEY: Optional[str] = None
+    GEMINI_DEFAULT_MODEL: str = "gemini-2.5-flash"
     MODEL_TIMEOUT_SECONDS: int = 45
 
     # Sandbox execution limits

@@ -31,7 +31,7 @@ bugbounty-hunter/
 │   │   └── components/    # Three.js hero scene, Ladder Timeline, Test Viewer, Activity Log
 │   └── api/               # Python FastAPI Async Backend
 │       ├── app/agent/     # Bounded state machine engine
-│       ├── app/providers/ # Model abstraction (Ollama, Qwen2.5-Coder, Deterministic engine)
+│       ├── app/providers/ # Model abstraction (Gemini, Ollama, Qwen2.5-Coder, Deterministic engine)
 │       ├── app/sandbox/   # Dual runner: Docker container & Confined Subprocess
 │       ├── app/evidence/  # Proof Pack JSON/Markdown/ZIP generator
 │       └── tests/         # Pytest integration & unit test suite (100% passing)
@@ -51,6 +51,7 @@ bugbounty-hunter/
 - Python 3.10+ (tested through Python 3.14)
 - (Optional) Docker for disposable container isolation
 - (Optional) [Ollama](https://ollama.ai) for local open-weight inference (`ollama pull qwen2.5-coder:7b`)
+- (Optional) [Google Gemini API key](https://aistudio.google.com/apikey) for cloud-accelerated hypothesis generation (free tier available)
 
 ### 2. Backend Setup
 ```bash
@@ -58,6 +59,11 @@ cd apps/api
 python -m venv .venv
 source .venv/bin/activate  # On Windows: .venv\Scripts\activate
 pip install -r requirements.txt
+
+# Optional: copy and configure environment variables
+cp ../../.env.example .env
+# Set GEMINI_API_KEY=your_key for cloud inference (or leave unset for local/deterministic mode)
+
 uvicorn app.main:app --host 0.0.0.0 --port 8000 --reload
 ```
 
