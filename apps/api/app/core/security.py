@@ -87,11 +87,14 @@ def safe_join_path(base_dir: Path, relative_path: str) -> Path:
     Safely resolve a relative path under base_dir, preventing path traversal attacks.
     Raises ValueError if the path escapes base_dir.
     """
-    clean_rel = Path(relative_path).as_posix().lstrip("/\\")
-    resolved = (base_dir / clean_rel).resolve()
+    # Normalize backslashes so Windows-style traversal attempts (e.g. ..\..\) are caught on POSIX too
+    normalized_rel = str(relative_path).replace("\\", "/").lstrip("/")
     base_resolved = base_dir.resolve()
+    resolved = (base_resolved / normalized_rel).resolve()
 
-    if not str(resolved).startswith(str(base_resolved)):
+    try:
+        resolved.relative_to(base_resolved)
+    except ValueError:
         raise ValueError(f"Path traversal detected: {relative_path} attempts to escape {base_dir}")
 
     return resolved
