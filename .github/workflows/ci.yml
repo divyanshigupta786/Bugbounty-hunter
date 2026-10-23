@@ -29,7 +29,14 @@ jobs:
 
       - name: Run Backend Pytest Suite
         working-directory: apps/api
-        run: pytest -v
+        run: |
+          pytest -v --tb=short 2>&1 | tee pytest_run.log || {
+            echo "### Pytest Failure Output" >> $GITHUB_STEP_SUMMARY
+            echo '```' >> $GITHUB_STEP_SUMMARY
+            tail -n 80 pytest_run.log >> $GITHUB_STEP_SUMMARY
+            echo '```' >> $GITHUB_STEP_SUMMARY
+            exit 1
+          }
 
       - name: Run Fixture Repo Baseline Tests
         working-directory: fixtures/sample-buggy-repo
