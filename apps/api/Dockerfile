@@ -4,16 +4,14 @@ WORKDIR /app
 
 RUN apt-get update && apt-get install -y --no-install-recommends \
     git \
-    docker.io \
     && rm -rf /var/lib/apt/lists/*
 
-COPY apps/api/requirements.txt requirements.txt
+COPY requirements.txt requirements.txt
 RUN pip install --no-cache-dir -r requirements.txt
 
-COPY apps/api /app/apps/api
-COPY fixtures /app/fixtures
+COPY . /app
 
-ENV PYTHONPATH=/app/apps/api
+ENV PYTHONPATH=/app
 
 EXPOSE 8000
 
