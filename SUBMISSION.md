@@ -1,5 +1,7 @@
 *This is a submission for the [Hacktoberfest Open-Source AI Challenge Week 3: Slow and Steady](https://dev.to/challenges/hacktoberfest-week3-2026-10-19)*
 
+![BugBounty Hunter Cover Banner](https://raw.githubusercontent.com/divyanshigupta786/Bugbounty-hunter/main/cover.jpg)
+
 ## What I Built
 
 **BugBounty Hunter** is an autonomous open-source AI forensic investigation platform that transforms vague defect reports into verified pytest reproduction tests, isolated execution trace evidence, and tamper-evident **Proof Packs**.
